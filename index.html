@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FASHION - Live for Unique Clothes</title>
+
+    <!-- Fonts: Poppins as specified in design -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config to match Figma colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            yellow: '#E6C744',
+                            black: '#000000',
+                            gray: '#C2C8DA',
+                            bg: '#F4F6F5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delays for grids */
+        .reveal-delay-100 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-200 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-300 {
+            transition-delay: 0.3s;
+        }
+
+        /* Text Highlight Effect (Under "UNIQUE") */
+        .highlight-bg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight-bg::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -5px;
+            right: -10px;
+            height: 100%;
+            background-color: #E6C744;
+            transform: rotate(-2deg);
+            z-index: -1;
+            border-radius: 2px;
+        }
+
+        /* Vector squiggles */
+        .squiggle-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .squiggle {
+            position: absolute;
+            right: 0;
+            bottom: -10px;
+            width: 120px;
+            height: 15px;
+            z-index: -1;
+        }
+
+        /* Hover effects */
+        .card-zoom {
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+
+        .card-zoom img {
+            transition: transform 0.5s ease;
+        }
+
+        .card-zoom:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Phone Mockup CSS */
+        .phone-mockup {
+            border: 12px solid #fff;
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            background: #fff;
+            position: relative;
+        }
+
+        .circle-bg {
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-900 bg-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm py-4 px-6 md:px-12 flex justify-between items-center shadow-sm transition-all duration-300"
+        id="navbar">
+        <div class="flex items-center gap-2">
+            <div class="text-2xl font-black tracking-tighter flex items-center gap-2">
+                <i class="fa-solid fa-shirt"></i> FASHION
+            </div>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-8 font-medium text-sm tracking-wide">
+            <a href="#catalogue" class="hover:text-brand-yellow transition-colors">CATALOGUE</a>
+            <a href="#fashion" class="hover:text-brand-yellow transition-colors">FASHION</a>
+            <a href="#favourite" class="hover:text-brand-yellow transition-colors">FAVOURITE</a>
+            <a href="#lifestyle" class="hover:text-brand-yellow transition-colors">LIFESTYLE</a>
+            <a href="#"
+                class="bg-black text-white px-5 py-2 rounded-md hover:bg-brand-yellow hover:text-black transition-colors duration-300">SIGN
+                UP</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-2xl" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-0 bg-white z-40 transform translate-x-full transition-transform duration-300 flex flex-col items-center justify-center space-y-8 text-xl font-bold md:hidden">
+        <button onclick="toggleMenu()" class="absolute top-6 right-6 text-3xl"><i
+                class="fa-solid fa-xmark"></i></button>
+        <a href="#catalogue" onclick="toggleMenu()">CATALOGUE</a>
+        <a href="#fashion" onclick="toggleMenu()">FASHION</a>
+        <a href="#favourite" onclick="toggleMenu()">FAVOURITE</a>
+        <a href="#lifestyle" onclick="toggleMenu()">LIFESTYLE</a>
+        <a href="#" class="bg-black text-white px-8 py-3 rounded-md">SIGN UP</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-28 pb-12 px-6 md:px-12 max-w-[1440px] mx-auto">
+        <div
+            class="bg-brand-bg rounded-[3rem] p-8 md:p-16 flex flex-col md:flex-row items-center relative overflow-hidden">
+
+            <!-- Left Content -->
+            <div class="w-full md:w-1/2 z-10 space-y-6 reveal active">
+                <h1 class="text-5xl md:text-7xl font-black leading-tight uppercase">
+                    <div class="bg-white inline-block px-2 transform -rotate-1 mb-2">LET'S</div><br>
+                    EXPLORE <br>
+                    <span class="highlight-bg">UNIQUE</span> <br>
+                    CLOTHES.
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 font-medium">Live for Influential and Innovative fashion!</p>
+                <div class="flex gap-4 pt-4">
+                    <button
+                        class="bg-black text-white px-8 py-4 rounded-lg font-bold hover:shadow-xl hover:-translate-y-1 transition-all duration-300">Shop
+                        Now</button>
+                </div>
+            </div>
+
+            <!-- Right Image -->
+            <div class="w-full md:w-1/2 mt-10 md:mt-0 relative reveal reveal-delay-200">
+                <!-- Decorative Stars -->
+                <i class="fa-solid fa-star text-brand-yellow text-4xl absolute top-0 left-10 animate-bounce"></i>
+                <i class="fa-solid fa-star text-brand-yellow text-2xl absolute bottom-20 right-10 animate-pulse"></i>
+                <i class="fa-solid fa-star text-gray-300 text-3xl absolute top-10 right-20"></i>
+
+                <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Fashion Model"
+                    class="w-full h-auto object-cover rounded-none md:rounded-3xl mix-blend-normal relative z-10"
+                    style="mask-image: linear-gradient(to bottom, black 80%, transparent 100%);">
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Strip -->
+    <div class="bg-brand-yellow py-8 px-6 overflow-hidden">
+        <div
+            class="flex justify-around items-center flex-wrap gap-8 max-w-[1440px] mx-auto opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
+            <!-- Using Text for logos to represent the brands in the image -->
+            <span class="text-3xl font-black italic">H&M</span>
+            <span class="text-3xl font-black tracking-widest">OBEY</span>
+            <div class="flex items-center gap-1 text-2xl font-bold"><i class="fa-brands fa-shopify"></i> shopify</div>
+            <div class="flex items-center gap-1 text-2xl font-bold">LACOSTE <i
+                    class="fa-solid fa-crocodile text-green-700"></i></div>
+            <span class="text-2xl font-black text-red-700">Levi's</span>
+            <div class="flex items-center gap-1 text-2xl font-bold">amazon</div>
+        </div>
+    </div>
+
+    <!-- New Arrivals -->
+    <section id="catalogue" class="py-20 px-6 md:px-12 max-w-[1440px] mx-auto">
+        <div class="mb-12 reveal">
+            <h2 class="text-4xl font-black uppercase squiggle-container">
+                NEW ARRIVALS
+                <svg class="squiggle text-brand-yellow" viewBox="0 0 100 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 10 Q 25 20, 50 10 T 100 10" stroke="#E6C744" stroke-width="8" fill="none" />
+                </svg>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Card 1 -->
+            <div class="group reveal reveal-delay-100">
+                <div class="card-zoom bg-gray-200 h-[450px] mb-4">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Hoodies" class="w-full h-full object-cover object-top">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">Hoodies & Sweatshirt</h3>
+                        <a href="#" class="text-gray-500 hover:text-brand-yellow">Explore Now!</a>
+                    </div>
+                    <a href="#" class="text-2xl text-gray-400 group-hover:text-black transition-colors"><i
+                            class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="group reveal reveal-delay-200">
+                <div class="card-zoom bg-gray-200 h-[450px] mb-4">
+                    <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Coats" class="w-full h-full object-cover object-top">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">Coats & Parkas</h3>
+                        <a href="#" class="text-gray-500 hover:text-brand-yellow">Explore Now!</a>
+                    </div>
+                    <a href="#" class="text-2xl text-gray-400 group-hover:text-black transition-colors"><i
+                            class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="group reveal reveal-delay-300">
+                <div class="card-zoom bg-gray-200 h-[450px] mb-4">
+                    <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Tees" class="w-full h-full object-cover object-top">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">Tees & T-Shirt</h3>
+                        <a href="#" class="text-gray-500 hover:text-brand-yellow">Explore Now!</a>
+                    </div>
+                    <a href="#" class="text-2xl text-gray-400 group-hover:text-black transition-colors"><i
+                            class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payday Sale Section -->
+    <section id="sale" class="w-full bg-gradient-to-r from-[#F9DF5E] to-[#E6C744] overflow-hidden my-12">
+        <div class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center">
+
+            <div class="w-full md:w-1/2 h-[400px] md:h-[600px] relative reveal">
+                <img src="https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Sale Model"
+                    class="absolute bottom-0 left-1/2 transform -translate-x-1/2 h-full object-contain">
+                <!-- Stars -->
+                <i class="fa-solid fa-star text-white text-4xl absolute top-10 left-10"></i>
+                <i class="fa-solid fa-star text-white text-2xl absolute bottom-40 right-10"></i>
+            </div>
+
+            <div class="w-full md:w-1/2 p-10 md:p-20 text-left reveal reveal-delay-200">
+                <h2 class="text-6xl md:text-7xl font-black uppercase mb-4 leading-none">
+                    <span class="bg-white px-2">PAYDAY</span><br>
+                    SALE NOW
+                </h2>
+                <p class="text-xl font-medium mb-2">Spend minimal $100 get 30% off voucher code for your next purchase
+                </p>
+                <p class="font-bold text-lg mb-8">1 June - 10 June 2021 <br> <span class="text-sm font-normal">*Terms &
+                        Conditions apply</span></p>
+                <button
+                    class="bg-black text-white px-8 py-4 rounded-lg font-bold hover:bg-white hover:text-black transition-all duration-300 shadow-lg">SHOP
+                    NOW</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Young's Favourite -->
+    <section id="favourite" class="py-20 px-6 md:px-12 max-w-[1440px] mx-auto">
+        <div class="mb-12 reveal">
+            <h2 class="text-4xl font-black uppercase squiggle-container">
+                Young's Favourite
+                <svg class="squiggle text-brand-yellow" viewBox="0 0 100 20" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 10 Q 25 20, 50 10 T 100 10" stroke="#E6C744" stroke-width="8" fill="none" />
+                </svg>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Fav 1 -->
+            <div class="group reveal reveal-delay-100">
+                <div class="card-zoom bg-gray-200 h-[400px] mb-4 rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1529139574466-a302d2d3f524?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Trending" class="w-full h-full object-cover">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">Trending on instagram</h3>
+                        <a href="#" class="text-gray-500 hover:text-brand-yellow">Explore Now!</a>
+                    </div>
+                    <a href="#" class="text-2xl text-gray-400 group-hover:text-black transition-colors"><i
+                            class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Fav 2 -->
+            <div class="group reveal reveal-delay-200">
+                <div class="card-zoom bg-gray-200 h-[400px] mb-4 rounded-2xl">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Under 40" class="w-full h-full object-cover object-top">
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold">All Under $40</h3>
+                        <a href="#" class="text-gray-500 hover:text-brand-yellow">Explore Now!</a>
+                    </div>
+                    <a href="#" class="text-2xl text-gray-400 group-hover:text-black transition-colors"><i
+                            class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="py-20 px-6 md:px-12 max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between">
+
+        <div class="w-full md:w-1/2 mb-10 md:mb-0 reveal">
+            <h2 class="text-4xl md:text-5xl font-black uppercase mb-6">DOWNLOAD APP &<br>GET THE VOUCHER!</h2>
+            <p class="text-gray-500 text-lg mb-8">Get 30% off for first transaction using<br>Rondovision mobile app for
+                now.</p>
+            <div class="flex gap-4">
+                <button
+                    class="bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-80 transition">
+                    <i class="fa-brands fa-apple text-3xl"></i>
+                    <div class="text-left">
+                        <div class="text-xs">Download on the</div>
+                        <div class="text-lg font-bold leading-none">App Store</div>
+                    </div>
+                </button>
+                <button
+                    class="bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:opacity-80 transition">
+                    <i class="fa-brands fa-google-play text-2xl"></i>
+                    <div class="text-left">
+                        <div class="text-xs">GET IT ON</div>
+                        <div class="text-lg font-bold leading-none">Google Play</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full md:w-1/2 flex justify-center relative reveal reveal-delay-200">
+            <!-- Background circles -->
+            <div
+                class="circle-bg w-[400px] h-[400px] border border-gray-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            </div>
+            <div
+                class="circle-bg w-[500px] h-[500px] border border-gray-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            </div>
+            <div class="circle-bg w-4 h-4 bg-gray-400 top-20 left-20"></div>
+            <div class="circle-bg w-6 h-6 bg-brand-yellow bottom-20 right-20"></div>
+
+            <!-- Phone Mockup -->
+            <div class="phone-mockup w-[280px] h-[550px] bg-white z-10 relative">
+                <!-- Status Bar -->
+                <div class="bg-gray-100 h-6 w-full flex justify-between px-4 items-center text-[10px]">
+                    <span>9:41</span>
+                    <div class="flex gap-1">
+                        <i class="fa-solid fa-signal"></i>
+                        <i class="fa-solid fa-wifi"></i>
+                        <i class="fa-solid fa-battery-full"></i>
+                    </div>
+                </div>
+                <!-- App Content -->
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <i class="fa-solid fa-bars text-gray-400"></i>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80"
+                                alt="Avatar">
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-xl mb-4">Match your style</h3>
+                    <div class="relative mb-4">
+                        <i class="fa-solid fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" placeholder="Search"
+                            class="w-full bg-gray-100 rounded-full py-2 pl-10 pr-4 text-sm">
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto mb-4 text-xs">
+                        <span class="bg-brand-yellow px-3 py-1 rounded-full font-bold">Trending Now</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-full text-gray-500">All</span>
+                        <span class="bg-gray-100 px-3 py-1 rounded-full text-gray-500">New</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+                                class="w-full h-32 object-cover">
+                            <div class="p-2 text-xs font-bold">Polkadot Red Dress</div>
+                        </div>
+                        <div class="rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1529139574466-a302d2d3f524?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80"
+                                class="w-full h-32 object-cover">
+                            <div class="p-2 text-xs font-bold">Striped Pink Dress</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bottom Nav -->
+                <div class="absolute bottom-0 w-full bg-white border-t py-3 px-6 flex justify-between text-gray-400">
+                    <i class="fa-solid fa-house text-brand-yellow"></i>
+                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i class="fa-solid fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="bg-brand-yellow py-24 text-center px-6">
+        <div class="max-w-3xl mx-auto reveal">
+            <h2 class="text-3xl md:text-4xl font-black uppercase text-white mb-2 leading-tight">JOIN SHOPPING COMMUNITY
+                TO<br>GET MONTHLY PROMO</h2>
+            <p class="text-white text-lg mb-8">Type your email down below and be young wild generation</p>
+            <form class="flex flex-col md:flex-row gap-2 justify-center max-w-lg mx-auto">
+                <input type="email" placeholder="Add your email here"
+                    class="px-6 py-4 rounded-lg flex-grow outline-none text-black">
+                <button type="submit"
+                    class="bg-black text-white px-8 py-4 rounded-lg font-bold hover:bg-gray-800 transition">SEND</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white pt-20 pb-10 px-6 md:px-12">
+        <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div class="space-y-6">
+                <h3 class="text-2xl font-black uppercase">FASHION</h3>
+                <p class="text-gray-400 text-sm">Complete your style with awesome clothes from us.</p>
+                <div class="flex gap-4">
+                    <a href="#"
+                        class="bg-brand-yellow text-black w-8 h-8 rounded-lg flex items-center justify-center hover:opacity-80"><i
+                            class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"
+                        class="bg-brand-yellow text-black w-8 h-8 rounded-lg flex items-center justify-center hover:opacity-80"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        class="bg-brand-yellow text-black w-8 h-8 rounded-lg flex items-center justify-center hover:opacity-80"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="#"
+                        class="bg-brand-yellow text-black w-8 h-8 rounded-lg flex items-center justify-center hover:opacity-80"><i
+                            class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-lg mb-6">Company</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white">About</a></li>
+                    <li><a href="#" class="hover:text-white">Contact us</a></li>
+                    <li><a href="#" class="hover:text-white">Support</a></li>
+                    <li><a href="#" class="hover:text-white">Careers</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-lg mb-6">Quick Link</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white">Share Location</a></li>
+                    <li><a href="#" class="hover:text-white">Orders Tracking</a></li>
+                    <li><a href="#" class="hover:text-white">Size Guide</a></li>
+                    <li><a href="#" class="hover:text-white">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="font-bold text-lg mb-6">Legal</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-white">Terms & conditions</a></li>
+                    <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-600 text-sm">
+            &copy; 2025 FASHION Inc. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript for Animations -->
+    <script>
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('translate-x-full');
+        }
+
+        // Intersection Observer for Smooth Scroll Reveal
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+
+        // Trigger once on load
+        reveal();
+    </script>
+</body>
+
+</html>
